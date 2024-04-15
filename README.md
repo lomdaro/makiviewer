@@ -1,4 +1,7 @@
 # MakiViewer
+
+[![GitHub release](https://img.shields.io/github/release/lomdaro/makiviewer.svg)](https://github.com/lomdaro/makiviewer/releases)
+
 A simple python script that will display an image in the bottom right corner of your screen. Multiple images will cycle at a set interval (default is 60 seconds). Display your favorite images in the corner at all times!
 ## Prerequisites 
 Before running the script, ensure that you have the following: 
@@ -6,7 +9,7 @@ Before running the script, ensure that you have the following:
 - PyQt5 library installed. You can install it using pip:
 ## Setup
 
-1. Clone or download the repository to your local machine.
+1. Download the latest release or clone the repository.
 
 2. Place your desired image files in a folder within the project directory. By default, the script looks for images in the `sprites` folder, but you can change this in the configuration file.
 
