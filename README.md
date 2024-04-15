@@ -31,6 +31,8 @@ To run MakiViewer, simply double-click on the `main.pyw` file. The script will r
 
 The widget will cycle through the images in the specified folder at the configured interval. If `randomize` is set to `true`, the images will be displayed in a random order. If `enable_hover_transparency` is set to `true`, the image will become semi-transparent when you hover over it.
 
+You can left click the image to cycle to the next image.
+
 To close the widget, right-click on the image.
 
 ## Customization
