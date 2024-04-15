@@ -41,4 +41,4 @@ Make sure to save the `config.ini` file after making any changes.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GPL-3.0 license](LICENSE).
