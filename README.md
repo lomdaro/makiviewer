@@ -6,7 +6,10 @@ A simple python script that will display an image in the bottom right corner of 
 ## Prerequisites 
 Before running the script, ensure that you have the following: 
 - Python 3.x installed on your system. You can download Python from the official website: [python.org](https://www.python.org) 
-- PyQt5 library installed. You can install it using pip:
+- PyQt5 library installed. You can install it using pip (make sure you install pip first):
+  ```
+  pip install PyQt5
+  ```
 ## Setup
 
 1. Download the latest release or clone the repository.
