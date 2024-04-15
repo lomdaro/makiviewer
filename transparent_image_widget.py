@@ -6,19 +6,20 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt, QTimer
 
 class TransparentImageWidget(QtWidgets.QLabel):
-    def __init__(self, image_paths, randomize, scale_factor, parent=None):
+    def __init__(self, image_paths, randomize, scale_factor, interval, enable_hover_transparency, parent=None):
         super(TransparentImageWidget, self).__init__(parent)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.image_paths = image_paths
         self.randomize = randomize
         self.scale_factor = scale_factor
+        self.enable_hover_transparency = enable_hover_transparency
         self.current_index = 0
         self.setPixmap(self.scaled_pixmap(self.image_paths[self.current_index]))
         self.setFixedSize(self.pixmap().size())
         self.timer = QTimer()
         self.timer.timeout.connect(self.change_image)
-        self.timer.start(60000)  # Change image every 60 seconds (60000 milliseconds)
+        self.timer.start(interval)
         self.update_position()
 
     def mousePressEvent(self, event):
@@ -27,13 +28,15 @@ class TransparentImageWidget(QtWidgets.QLabel):
         elif event.button() == Qt.LeftButton:
             self.timer.stop()  # Stop the timer
             self.change_image()  # Change the image immediately
-            self.timer.start(60000)  # Restart the timer
+            self.timer.start()  # Restart the timer
 
     def enterEvent(self, event):
-        self.setWindowOpacity(0.5)  # Set the opacity to 50% when hovered
+        if self.enable_hover_transparency:
+            self.setWindowOpacity(0.5)  # Set the opacity to 50% when hovered
 
     def leaveEvent(self, event):
-        self.setWindowOpacity(1.0)  # Return the opacity to 100% when not hovered
+        if self.enable_hover_transparency:
+            self.setWindowOpacity(1.0)  # Return the opacity to 100% when not hovered
 
     def change_image(self):
         if self.randomize:
@@ -64,6 +67,8 @@ def main():
     sprite_folder = config.get('Settings', 'folder', fallback='sprites')
     randomize = config.getboolean('Settings', 'randomize', fallback=True)
     scale_factor = config.getfloat('Settings', 'scale', fallback=0.75)
+    interval = config.getint('Settings', 'interval', fallback=60) * 1000  # Convert seconds to milliseconds
+    enable_hover_transparency = config.getboolean('Settings', 'enable_hover_transparency', fallback=True)
 
     # Get the list of image files in the specified directory
     image_files = [os.path.join(sprite_folder, file) for file in os.listdir(sprite_folder) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
@@ -72,6 +77,6 @@ def main():
         print("No image files found.")
         sys.exit(1)
 
-    widget = TransparentImageWidget(image_files, randomize, scale_factor)
+    widget = TransparentImageWidget(image_files, randomize, scale_factor, interval, enable_hover_transparency)
     widget.show()
     sys.exit(app.exec_())
